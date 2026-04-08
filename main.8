@@ -1,0 +1,135 @@
+#include <iostream>
+using namespace std;
+
+// ================= ЗАВДАННЯ 1 =================
+// Видалити елементи, що зустрічаються більше 2 разів
+void task1() {
+    int N;
+    cout << "\nTask 1\nEnter N: ";
+    cin >> N;
+
+    int A[100], B[100];
+
+    cout << "Enter array:\n";
+    for (int i = 0; i < N; i++)
+        cin >> A[i];
+
+    int newSize = 0;
+
+    for (int i = 0; i < N; i++) {
+        int count = 0;
+
+        for (int j = 0; j < N; j++) {
+            if (A[i] == A[j])
+                count++;
+        }
+
+        if (count <= 2)
+            B[newSize++] = A[i];
+    }
+
+    cout << "Result:\n";
+    for (int i = 0; i < newSize; i++)
+        cout << B[i] << " ";
+    cout << endl;
+}
+
+// ================= ЗАВДАННЯ 2 =================
+// Середнє арифметичне непарних рядків (без if)
+void task2() {
+    int M, N;
+    cout << "\nTask 2\nEnter M and N: ";
+    cin >> M >> N;
+
+    int A[100][100];
+
+    cout << "Enter matrix:\n";
+    for (int i = 0; i < M; i++)
+        for (int j = 0; j < N; j++)
+            cin >> A[i][j];
+
+    cout << "Averages (rows 1,3,5,...):\n";
+
+    for (int i = 0; i < M; i += 2) {
+        double sum = 0;
+
+        for (int j = 0; j < N; j++)
+            sum += A[i][j];
+
+        cout << sum / N << endl;
+    }
+}
+
+// ================= ЗАВДАННЯ 4 (ТВІЙ ВАРІАНТ) =================
+// Подвійний вибір, спадання, char
+void doubleSelectionSort(char A[], int N) {
+    int left = 0, right = N - 1;
+
+    while (left < right) {
+        int maxIndex = left;
+        int minIndex = left;
+
+        for (int i = left; i <= right; i++) {
+            if (A[i] > A[maxIndex])
+                maxIndex = i;
+
+            if (A[i] < A[minIndex])
+                minIndex = i;
+        }
+
+        // ставимо максимум на початок
+        swap(A[left], A[maxIndex]);
+
+        if (minIndex == left)
+            minIndex = maxIndex;
+
+        // ставимо мінімум в кінець
+        swap(A[right], A[minIndex]);
+
+        left++;
+        right--;
+    }
+}
+
+void task4() {
+    int N;
+    cout << "\nTask 3 (Variant 4)\nEnter N: ";
+    cin >> N;
+
+    char A[100];
+
+    cout << "Enter characters:\n";
+    for (int i = 0; i < N; i++)
+        cin >> A[i];
+
+    doubleSelectionSort(A, N);
+
+    cout << "Sorted (descending):\n";
+    for (int i = 0; i < N; i++)
+        cout << A[i] << " ";
+    cout << endl;
+}
+
+// ================= MAIN =================
+int main() {
+    int choice;
+
+    do {
+        cout << "\n========= MENU =========\n";
+        cout << "1 - Task 1 (Array)\n";
+        cout << "2 - Task 2 (Matrix)\n";
+        cout << "3 - Task 4 (Sorting, variant 4)\n";
+        cout << "0 - Exit\n";
+        cout << "Choose: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: task1(); break;
+            case 2: task2(); break;
+            case 3: task4(); break;
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
